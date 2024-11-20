@@ -4,18 +4,19 @@ import logoImg from "../assets/logo.svg"
 
 import Image from "next/image"
 import { globalStyles } from '../styles/globals'
+import { Container, Header } from '../styles/pages/app'
 
 globalStyles()
 
 export default function App({ Component, pageProps }: AppProps) {
     return(
-      <div>
-        <div>
+      <Container>
+        <Header>
         <Image src={logoImg} alt="" />
-        </div>
+        </Header>
 
         <Component {...pageProps} />
-      </div>
+      </Container>
     ) 
       
 }

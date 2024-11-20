@@ -3,6 +3,25 @@ import Image from "next/image"
 import Link from "next/link"
 import Stripe from "stripe"
 import { stripe } from "../lib/stripe"
+import { styled } from "../styles"
+import { HomeContainer, Product } from "../styles/pages/home"
+
+import { useKeenSlider } from 'keen-slider/react'
+
+const Button = styled('button', {
+  backgroundColor: '$green300',
+  borderRadius: 4,
+  border: 0,
+  padding: '4px 8px',
+
+  span: {
+    fontWeight: 'bold'
+  },
+
+  '&:hover': {
+    filter: 'brightness(0.8)'
+  }
+})
 
 interface HomeProps {
   products: {
@@ -13,17 +32,33 @@ interface HomeProps {
   }[]
 }
 
-export default function Home({ products }: HomeProps) {
+export default function Home({ products }: HomeProps) { 
+  const [sliderRef] = useKeenSlider({
+    slides: {
+      perView: 3,
+      spacing: 48
+    }
+  });
+
   return (
-    <>
+
+    <HomeContainer ref={sliderRef} className="keen-slider">
      {products.map(product => {
-        return (
-          <Link href={`/product/${product.id}`} key={product.id} prefetch={false}>
-            <Image src={product.imageUrl} width={200} height={200} alt="" />
-          </Link>
+       return (
+        <Link href={`/product/${product.id}`} key={product.id} prefetch={false}>
+          <Product className="keen-slider__slide">
+            <Image src={product.imageUrl} width={400} height={400} alt="" />
+            
+            <footer>
+              <strong>{product.name}</strong>
+              <span>{product.price}</span>
+            </footer>
+
+          </Product>
+        </Link>
         )
       })}
-    </>
+    </HomeContainer>
   )
 }
 
