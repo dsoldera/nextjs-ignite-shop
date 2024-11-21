@@ -7,6 +7,7 @@ import { styled } from "../styles"
 import { HomeContainer, Product } from "../styles/pages/home"
 
 import { useKeenSlider } from 'keen-slider/react'
+import Head from "next/head"
 
 const Button = styled('button', {
   backgroundColor: '$green300',
@@ -41,24 +42,28 @@ export default function Home({ products }: HomeProps) {
   });
 
   return (
+    <>
+      <Head>
+        <title>Home | Ignite Shop</title>
+      </Head>
+      <HomeContainer ref={sliderRef} className="keen-slider">
+      {products.map(product => {
+        return (
+          <Link href={`/product/${product.id}`} key={product.id} prefetch={false}>
+            <Product className="keen-slider__slide">
+              <Image src={product.imageUrl} width={400} height={400} alt="" />
+              
+              <footer>
+                <strong>{product.name}</strong>
+                <span>{product.price}</span>
+              </footer>
 
-    <HomeContainer ref={sliderRef} className="keen-slider">
-     {products.map(product => {
-       return (
-        <Link href={`/product/${product.id}`} key={product.id} prefetch={false}>
-          <Product className="keen-slider__slide">
-            <Image src={product.imageUrl} width={400} height={400} alt="" />
-            
-            <footer>
-              <strong>{product.name}</strong>
-              <span>{product.price}</span>
-            </footer>
-
-          </Product>
-        </Link>
-        )
-      })}
-    </HomeContainer>
+            </Product>
+          </Link>
+          )
+        })}
+      </HomeContainer>
+    </>
   )
 }
 
