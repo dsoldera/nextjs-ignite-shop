@@ -3,26 +3,11 @@ import Image from "next/image"
 import Link from "next/link"
 import Stripe from "stripe"
 import { stripe } from "../lib/stripe"
-import { styled } from "../styles"
 import { HomeContainer, Product } from "../styles/pages/home"
 
 import { useKeenSlider } from 'keen-slider/react'
-import Head from "next/head"
+import { NextSeo } from "next-seo"
 
-const Button = styled('button', {
-  backgroundColor: '$green300',
-  borderRadius: 4,
-  border: 0,
-  padding: '4px 8px',
-
-  span: {
-    fontWeight: 'bold'
-  },
-
-  '&:hover': {
-    filter: 'brightness(0.8)'
-  }
-})
 
 interface HomeProps {
   products: {
@@ -43,9 +28,10 @@ export default function Home({ products }: HomeProps) {
 
   return (
     <>
-      <Head>
-        <title>Home | Ignite Shop</title>
-      </Head>
+      <NextSeo
+        title="Home | Ignite Shop"
+        description="Compre sua camiseta aqui no Ignite Shop"
+      />
       <HomeContainer ref={sliderRef} className="keen-slider">
       {products.map(product => {
         return (

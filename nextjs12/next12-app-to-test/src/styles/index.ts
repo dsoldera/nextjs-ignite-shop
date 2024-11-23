@@ -15,11 +15,12 @@ export const {
       white: '#FFF',
       rocketseat: '#8257e6',
 
+      gray100: '#e1e1e6',
+      gray300: '#c4c4cc',
       gray900: '#121214',
       gray800: '#202024',
-      gray300: '#c4c4cc',
-      gray100: '#e1e1e6',
-
+      gray700: '#1e1e1e',
+      
       green500: '#00875f',
       green300: '#00b37e',
     },

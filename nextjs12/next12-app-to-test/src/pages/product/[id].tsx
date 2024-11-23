@@ -42,27 +42,28 @@ export default function Product({ product }: ProductProps) {
   }
 
   return(
-    <ProductContainer>
-      
+    <>
       <Head>
         <title>{product.name} | Ignite Shop</title>
       </Head>
+      <ProductContainer>
 
-      <ImageContainer>
-        <Image src={product.imageUrl} width={400} height={400} alt="" />
-      </ImageContainer>
-      
-      <ProductDetails>
-        <h1>{product.name}</h1>
-        <span>{product.price}</span>
+        <ImageContainer>
+          <Image src={product.imageUrl} width={400} height={400} alt="" />
+        </ImageContainer>
         
-        <p>{product.description}</p>
-        
-        <button disabled={isCreatingCheckoutSession} onClick={handleBuyButton}>
-          Comprar agora
-        </button>
-      </ProductDetails>
-    </ProductContainer>
+        <ProductDetails>
+          <h1>{product.name}</h1>
+          <span>{product.price}</span>
+          
+          <p>{product.description}</p>
+          
+          <button disabled={isCreatingCheckoutSession} onClick={handleBuyButton}>
+            Comprar agora
+          </button>
+        </ProductDetails>
+      </ProductContainer>
+    </>
   )
 }
 
