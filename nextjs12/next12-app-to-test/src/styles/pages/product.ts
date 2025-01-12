@@ -27,6 +27,7 @@ export const ImageContainer = styled('div', {
 export const ProductDetails = styled('div', {
   display: 'flex',
   flexDirection: 'column',
+  paddingRight: '2rem',
   
   h1: {
     fontSize: '$2xl',
@@ -57,6 +58,7 @@ export const ProductDetails = styled('div', {
     cursor: 'pointer',
     fontWeight: 'bold',
     fontSize: '$md',
+    marginBottom: '1rem',
 
     '&:disabled': {
       opacity: 0.6,

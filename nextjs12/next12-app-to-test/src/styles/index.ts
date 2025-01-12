@@ -16,6 +16,7 @@ export const {
       rocketseat: '#8257e6',
 
       gray100: '#e1e1e6',
+      gray400: '#8D8D99',
       gray300: '#c4c4cc',
       gray900: '#121214',
       gray800: '#202024',

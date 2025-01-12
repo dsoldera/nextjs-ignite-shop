@@ -3,18 +3,23 @@ import { NextSeo } from 'next-seo';
 import Image from "next/image";
 import Link from "next/link";
 import Stripe from "stripe";
+import { useShoppingCart } from "use-shopping-cart";
+import { v4 as uuidv4 } from 'uuid';
 import { stripe } from "../lib/stripe";
-import { ImageContainer, SuccessContainer } from "../styles/pages/success";
+import { ImageContainer, ImageSectionContainer, SuccessContainer } from "../styles/pages/success";
 
 interface SuccessProps {
   costumerName: string;
   product: {
     name: string;
-    imageUrl: string;
+    imageUrl: string[]
+    count: number
   }
 }
 
 export default function Success({ costumerName, product}: SuccessProps) {
+  const { clearCart } = useShoppingCart()
+  
   return (
     <SuccessContainer>
       <NextSeo
@@ -22,14 +27,23 @@ export default function Success({ costumerName, product}: SuccessProps) {
         noindex={true}
         description="Sua Compra foi efetuada com Sucesso"
       />
+      <ImageSectionContainer>
+
+        {product.imageUrl.map(image => {
+          return (
+            <ImageContainer key={uuidv4()}>
+              <Image src={image} width={120} height={110} alt='' />
+          </ImageContainer>
+          )
+        })}
+      </ImageSectionContainer>
       <h1>Compra efetuada</h1>
-      <ImageContainer>
-        <Image src={product.imageUrl} width={120} height={110} alt="" />
-      </ImageContainer>
       <p>
-        Uhuul <strong>{costumerName}</strong>, sua <strong>{product.name}</strong> já está a caminho da sua casa.
+        Uhuul <strong>{costumerName}</strong>,
+        sua compra de <strong>{product.count} </strong>
+        camiseta(s) já está a caminho da sua casa.
       </p>
-      <Link href="/">
+      <Link href="/" onClick={() => clearCart()}>
         Voltar ao catálogo
       </Link>
     </SuccessContainer>
@@ -56,13 +70,20 @@ export const getServerSideProps: GetServerSideProps = async ({ query}) => {
   
   const costumerName = session.customer_details?.name;
   const product = session.line_items?.data[0].price?.product as Stripe.Product
+  const productCount = session.line_items?.data.length
+  const imagens = []
+  for (let i = 0; i < productCount!; i++) {
+    imagens.push(...product.images)
+  } 
 
   return {
     props: {
       costumerName,
       product: {
         name: product.name,
-        imageUrl: product.images[0]
+        imageUrl: imagens,
+        count: productCount,
+        id: product.id
       }
     }
   }
